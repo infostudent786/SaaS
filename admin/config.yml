@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-gateway
   repo: infostudent786/SaaS # Change this for each school
   branch: main
 
