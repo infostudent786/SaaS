@@ -1,6 +1,72 @@
 # 🏫 EduPress: Professional School Micro-SaaS Template
 
-EduPress is a high-performance school website template designed for rapid white-labeling and mass-deployment. Built with React and Tailwind, it allows you to launch professional school websites in minutes with **Zero Hosting Costs** via GitHub Pages.
+---
+
+## 🏫 How to Use This Repo as a Template for Other Schools (SaaS Guide)
+
+To launch a new school website using this template, follow these steps to avoid common errors and ensure a smooth deployment:
+
+### 1. Create a New Repository
+- On GitHub, click "Use this template" or fork this repo to create a new repo for the school (e.g., `schoolname-website`).
+- Clone the new repo to your local machine.
+
+### 2. Update School Branding & Content
+- Edit `config/site.json`:
+  - Change school name, tagline, logoUrl, heroImageUrl, principalImageUrl, theme colors, navigation, and integrations (formActionUrl, mapEmbedUrl).
+- Edit `admin/config.yml`:
+  - Update the `repo:` field to match the new repo name and owner.
+  - Example:
+    ```yaml
+    backend:
+      name: github
+      repo: your-username/new-school-repo
+      branch: main
+    ```
+- Update any content in `pages/` as needed for the new school.
+
+### 3. Configure Vite for GitHub Pages
+- In `vite.config.ts`, set the base path to the new repo name:
+  ```js
+  base: '/new-school-repo/',
+  ```
+
+### 4. Install Dependencies
+```
+npm install
+```
+
+### 5. Build the Project
+```
+npm run build
+```
+
+### 6. Copy Static Assets
+```
+mkdir -p dist/config
+cp config/site.json dist/config/
+```
+
+### 7. Deploy to GitHub Pages (Manual Method)
+```
+cd dist
+git init
+git remote add origin git@github.com:your-username/new-school-repo.git
+git checkout -b gh-pages
+git add .
+git commit -m "Deploy to GitHub Pages"
+git push -f origin gh-pages
+```
+Then, in your GitHub repo settings, set Pages to deploy from the `gh-pages` branch (root folder).
+
+### 8. Update CMS Access
+- Ensure the `admin/config.yml` repo and branch fields are correct.
+- Set up GitHub OAuth or Netlify Identity if needed for school staff.
+
+### 9. Common Errors & Fixes
+- **White screen**: Check Vite base path and that you are serving the built `dist` folder.
+- **404 for config/site.json**: Copy the file manually as above.
+- **404 for index.css or index.tsx**: Ensure you are deploying the `dist` folder, not the source.
+- **Tailwind CDN warning**: For production, use Tailwind as a PostCSS plugin or CLI (see Tailwind docs).
 
 ---
 
@@ -78,5 +144,40 @@ If the school has its own domain:
 3. **Pure Profit**: Since your hosting cost is $0, every dollar earned after the initial work is pure profit.
 
 ---
+
+====================================================
+🛠️ Deployment & Troubleshooting Steps (2026)
+0. Prerequisites
+Install Node.js & npm: Download from https://nodejs.org/ and install. Verify with node -v and npm -v.
+1. Install Dependencies
+  npm install
+2. Vite Configuration for GitHub Pages
+base: '/SaaS/',
+This ensures correct asset loading on GitHub Pages.
+3. SSH Setup (Optional)
+Change your git remote to SSH
+git remote set-url origin git@github.com:infostudent786/SaaS.git
+4. Build the Project
+npm run build
+5. Copy Static Assets
+Manually copy site.json to site.json after each build:
+
+mkdir -p dist/config
+cp config/site.json dist/config/
+6. Deploy to GitHub Pages (Manual Method)
+cd dist
+git init
+git remote add origin git@github.com:infostudent786/SaaS.git
+git checkout -b gh-pages
+git add .
+git commit -m "Deploy to GitHub Pages"
+git push -f origin gh-pages
+
+7. Common Issues & Fixes
+White Screen: Usually caused by missing base path or not serving built files.
+404 for config/site.json: Copy the file manually as above.
+404 for index.css or index.tsx: Ensure you are deploying the dist folder, not the source.
+Tailwind CDN Warning: For production, use Tailwind as a PostCSS plugin or CLI (see Tailwind docs).
+===============================================
 
 *Need technical assistance or custom feature development for a client? Reach out via our developer support channel.*
