@@ -46,6 +46,13 @@ mkdir -p dist/config
 cp config/site.json dist/config/
 ```
 
+### 6b. Copy the Admin Panel
+After building, always copy the `admin` folder to `dist`:
+```
+cp -r admin dist/
+```
+This ensures the CMS admin panel is available at `/admin` on your deployed site.
+
 ### 7. Deploy to GitHub Pages (Manual Method)
 ```
 cd dist
@@ -98,7 +105,54 @@ To allow school staff to edit content via the `/admin` dashboard:
    ```
 3. **OAuth Setup**: Configure GitHub OAuth (via Netlify Identity or a proxy) so the school staff can log in using their own credentials.
 
-### 4. Functional Integrations
+### 3b. Give School Staff Access to CMS (GitHub Pages Only)
+
+To allow school staff to manage the website via the admin panel, follow these steps:
+
+#### 1. Add Staff as GitHub Collaborators
+- Go to your GitHub repo → Settings → Collaborators.
+- Add each staff member’s GitHub username and give them **Write** access.
+- Example:
+  - Owner: infostudent786
+  - Staff: schoolstaff1, schoolstaff2
+
+#### 2. Update `admin/config.yml`
+- Use this backend config:
+  ```yaml
+  backend:
+    name: github
+    repo: infostudent786/SaaS
+    branch: main
+  ```
+- Remove any `identity_url` or `gateway_url` lines.
+
+#### 3. How Staff Log In
+- Go to `https://infostudent786.github.io/SaaS/admin`
+- Click “Login with GitHub.”
+- Authorize the app and grant repo access.
+- Only collaborators with write access can log in and manage content.
+
+#### 4. When to Build & Deploy
+- **After updating config.yml or any site content:**
+  - Run:
+    ```sh
+    npm run build
+    cp -r admin dist/
+    cp config/site.json dist/config/
+    cd dist
+    git add .
+    git commit -m "Update CMS config and site content"
+    git push -f origin gh-pages
+    ```
+- **Always build and redeploy after any change to config.yml, site.json, or page content.**
+
+#### 5. Security Note
+- All changes are committed directly to the repo.
+- Only trusted staff should be given write access.
+
+---
+
+## Functional Integrations
 *A static site needs external "engines" for dynamic data.*
 - **Forms (Contact & Admissions)**: 
   - Create an account at [Formspree.io](https://formspree.io/).
