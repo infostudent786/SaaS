@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: your-username/your-school-repo # Change this for each school
+  repo: infostudent786/SaaS # Change this for each school
   branch: main
 
 media_folder: "assets/img/uploads"
